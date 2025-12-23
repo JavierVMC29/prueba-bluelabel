@@ -5,12 +5,15 @@ import {
   IsOptional,
   IsBoolean,
   ValidateNested,
+  IsEnum,
 } from 'class-validator';
-
 import { Type } from 'class-transformer';
 
+import { UserThemeEnum } from '../enums/user-theme.enum';
+import { UserLanguageEnum } from '../enums/user-language.enum';
+
 export class SettingsDto {
-  @IsString()
+  @IsEnum(UserThemeEnum, { message: 'El tema debe ser dark o light' })
   @IsOptional()
   theme?: string;
 
@@ -18,7 +21,7 @@ export class SettingsDto {
   @IsOptional()
   notifications?: boolean;
 
-  @IsString()
+  @IsEnum(UserLanguageEnum, { message: 'El idioma debe ser es o en' })
   @IsOptional()
   language?: string;
 }
