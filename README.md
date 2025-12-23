@@ -90,13 +90,34 @@ pnpm start:prod
 
 ## 🧪 Testing
 
+### Unit Tests
+
+Ejecuta los tests unitarios (mocks):
+
 ```bash
-# Unit tests
 pnpm test
+```
 
-# E2E tests
+### E2E tests
+
+Para los tests End-to-End es necesario levantar primero el contenedor de la base de datos de prueba:
+
+```bash
+docker compose -f docker-compose.test.yaml up -d
+```
+
+```bash
 pnpm test:e2e
+```
 
-# Test coverage
+(Opcional) Apagar el contenedor al finalizar:
+
+```bash
+docker compose -f docker-compose.test.yaml down
+```
+
+### Test coverage
+
+```bash
 pnpm test:cov
 ```
