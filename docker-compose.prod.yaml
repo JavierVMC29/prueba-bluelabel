@@ -1,0 +1,42 @@
+name: prueba_bluelabel
+
+services:
+  prueba_bluelabel_mysql:
+    restart: unless-stopped
+    image: mysql:8.0
+    container_name: prueba_bluelabel_mysql
+    ports:
+      - '127.0.0.1:${MYSQL_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-prueba_db}
+      MYSQL_USER: ${MYSQL_USER:-user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password123}
+    volumes:
+      - prueba_bluelabel_mysql_data:/var/lib/mysql
+    networks:
+      - prueba_bluelabel_network
+    command: --default-authentication-plugin=mysql_native_password
+
+  prueba_bluelabel_app:
+    restart: unless-stopped
+    container_name: prueba_bluelabel_app
+    image: prueba-bluelabel-app:1.0.0
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - '127.0.0.1:${PORT}:${PORT}'
+    networks:
+      - prueba_bluelabel_network
+    env_file:
+      - .env
+
+volumes:
+  prueba_bluelabel_mysql_data:
+    driver: local
+
+networks:
+  prueba_bluelabel_network:
+    name: prueba_bluelabel_network
+    driver: bridge

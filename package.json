@@ -1,0 +1,90 @@
+{
+  "name": "prueba-bluelabel",
+  "version": "1.0.0",
+  "description": "Backend para prueba tecnica Bluelabel",
+  "author": "JavierVMC",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "nest build",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --env-file=.env.test",
+    "test:unit": "cross-env NODE_ENV=test jest --config ./test/jest.config.json --env-file=.env.test",
+    "test:unit:watch": "cross-env NODE_ENV=test jest --watch --config ./test/jest.config.json --env-file=.env.test",
+    "typeorm": "typeorm-ts-node-commonjs -d src/database/data-source.ts",
+    "migration:generate": "typeorm-ts-node-commonjs -d src/database/data-source.ts migration:generate",
+    "migration:run": "typeorm-ts-node-commonjs -d src/database/data-source.ts migration:run",
+    "migration:revert": "typeorm-ts-node-commonjs -d src/database/data-source.ts migration:revert"
+  },
+  "dependencies": {
+    "@nestjs/common": "11.1.10",
+    "@nestjs/config": "4.0.2",
+    "@nestjs/core": "11.1.10",
+    "@nestjs/mapped-types": "2.1.0",
+    "@nestjs/platform-express": "11.1.10",
+    "@nestjs/throttler": "6.5.0",
+    "@nestjs/typeorm": "11.0.0",
+    "body-parser": "2.2.1",
+    "class-transformer": "0.5.1",
+    "class-validator": "0.14.3",
+    "helmet": "8.1.0",
+    "mysql2": "^3.16.0",
+    "nestjs-pino": "4.5.0",
+    "pino-http": "11.0.0",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "typeorm": "0.3.28"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "11.0.14",
+    "@nestjs/schematics": "11.0.9",
+    "@nestjs/testing": "11.1.10",
+    "@types/express": "5.0.6",
+    "@types/jest": "30.0.0",
+    "@types/node": "25.0.3",
+    "@types/supertest": "6.0.3",
+    "@typescript-eslint/eslint-plugin": "8.50.1",
+    "@typescript-eslint/parser": "8.50.1",
+    "cross-env": "^10.1.0",
+    "dotenv": "17.2.3",
+    "eslint": "9.39.2",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.4",
+    "jest": "30.2.0",
+    "pino-pretty": "13.1.3",
+    "prettier": "3.7.4",
+    "source-map-support": "0.5.21",
+    "supertest": "7.1.4",
+    "ts-jest": "29.4.6",
+    "ts-loader": "9.5.4",
+    "ts-node": "10.9.2",
+    "tsconfig-paths": "4.2.0",
+    "typescript": "5.9.3"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}

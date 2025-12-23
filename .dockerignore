@@ -1,0 +1,9 @@
+dist/
+node_modules/
+test/
+.env.*
+.gitignore
+README.md
+k8s
+.vscode/
+.sonar/
