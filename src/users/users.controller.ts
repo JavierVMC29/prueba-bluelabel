@@ -7,8 +7,9 @@ import {
   Param,
   Patch,
   ParseIntPipe,
-  Logger,
 } from '@nestjs/common';
+
+import { Logger } from 'nestjs-pino';
 
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -17,9 +18,10 @@ import { UpdateSettingsDto } from './dtos/update-settings.dto';
 
 @Controller('users')
 export class UsersController {
-  private readonly logger = new Logger(UsersController.name);
-
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly logger: Logger,
+  ) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {

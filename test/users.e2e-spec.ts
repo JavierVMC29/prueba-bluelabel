@@ -38,9 +38,9 @@ describe('UsersController (e2e)', () => {
     })
       // SOBRESCRIBIMOS LA BD REAL CON MOCKS
       // Esto permite probar Endpoints sin Mysql corriendo
-      .overrideProvider(getRepositoryToken(User))
+      .overrideProvider(getRepositoryToken(User, 'mysql'))
       .useValue(mockUserRepo)
-      .overrideProvider(getRepositoryToken(Task))
+      .overrideProvider(getRepositoryToken(Task, 'mysql'))
       .useValue(mockTaskRepo)
       .compile();
 

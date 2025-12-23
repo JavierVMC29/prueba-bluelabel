@@ -1,3 +1,4 @@
+/// src/core/core.module.ts
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -36,6 +37,9 @@ import { DatabaseModule } from '@src/database/database.module';
                 options: {
                   messageKey: 'message',
                   colorize: true,
+                  translateTime: 'SYS:standard',
+                  ignore: 'pid,hostname',
+                  singleLine: false,
                 },
               },
         messageKey: 'message',

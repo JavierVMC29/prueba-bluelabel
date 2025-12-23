@@ -1,7 +1,13 @@
 // src/users/users.service.ts
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
 import { Repository } from 'typeorm';
+import { Logger } from 'nestjs-pino';
 
 import { CreateUserDto } from './dtos/create-user.dto';
 import { CreateTaskDto } from './dtos/create-task.dto';
@@ -11,17 +17,27 @@ import { Task } from './entities/task.entity';
 
 @Injectable()
 export class UsersService {
-  private readonly logger = new Logger(UsersService.name);
-
   constructor(
     @InjectRepository(User, 'mysql')
     private usersRepository: Repository<User>,
     @InjectRepository(Task, 'mysql')
     private tasksRepository: Repository<Task>,
+    private readonly logger: Logger,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
     this.logger.log(`Creando nuevo usuario: ${createUserDto.email}`);
+
+    const existingUser = await this.usersRepository.findOneBy({
+      email: createUserDto.email,
+    });
+
+    if (existingUser) {
+      this.logger.warn(
+        `Intento de registro con email duplicado: ${createUserDto.email}`,
+      );
+      throw new ConflictException('El email ya está registrado');
+    }
 
     try {
       const user = this.usersRepository.create(createUserDto);
