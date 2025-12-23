@@ -8,6 +8,7 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 
 import * as bodyParser from 'body-parser';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -39,14 +40,29 @@ async function bootstrap() {
     }),
   );
 
+  // --- CONFIGURACIÓN SWAGGER (OPENAPI) ---
+
+  const config = new DocumentBuilder()
+    .setTitle('Prueba Técnica Backend')
+    .setDescription('API RESTful con NestJS, TypeORM y MySQL')
+    .setVersion('1.0')
+    .addTag('Users', 'Gestión de usuarios y configuraciones')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+
+  // La ruta será /docs
+  SwaggerModule.setup('docs', app, document);
+
+  // ---------------------------------------
+
   const port = process.env.PORT || 3000;
   await app.listen(port);
 
-  await app.listen(process.env.PORT);
-
   const logger = new Logger('Bootstrap');
 
-  logger.log(`App is running on ${await app.getUrl()}`);
+  logger.log(`App running on: ${await app.getUrl()}`);
+  logger.log(`Swagger Docs: ${await app.getUrl()}/docs`);
 }
 
 bootstrap().catch(handleError);
